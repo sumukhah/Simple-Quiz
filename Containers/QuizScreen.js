@@ -43,6 +43,7 @@ export default class QuizScreen extends Component {
       // For terminating from game, Keep it less to check faster
       if (this.state.level === 1) {
         this.props.navigation.navigate("intro", { coins: this.state.score });
+        return;
       }
       this.setState((state) => ({
         level: state.level + 1,
@@ -89,6 +90,11 @@ export default class QuizScreen extends Component {
                 key={opt}
                 onSelectOption={this.onSelectOption}
                 disabled={status !== ""}
+                propsStyle={
+                  status !== "" && opt === ans
+                    ? { backgroundColor: "green" }
+                    : {}
+                }
               />
             ))}
           </View>

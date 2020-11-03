@@ -1,13 +1,17 @@
 import React from "react";
 import { Card, Text, CardItem } from "native-base";
-import { StyleSheet } from "react-native";
+import { ShadowPropTypesIOS, StyleSheet } from "react-native";
 
-export default function OptionCard({ optionText, onSelectOption, ...props }) {
+export default function OptionCard({
+  optionText,
+  onSelectOption,
+  propsStyle,
+  ...props
+}) {
   return (
     <Card style={styles.containerStyle}>
       <CardItem
-        style={styles.cardItem}
-        header
+        style={{ ...styles.cardItem, ...propsStyle }}
         button
         onPress={() => {
           onSelectOption(optionText);
@@ -26,11 +30,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cardItem: {
-    alignSelf: "stretch",
     justifyContent: "center",
+    alignSelf: "stretch",
     borderRadius: 10,
   },
   optionText: {
     fontWeight: "700",
+    padding: 10,
   },
 });

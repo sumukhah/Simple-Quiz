@@ -11,6 +11,16 @@ import QuizScreen from "./Containers/QuizScreen";
 
 const Stack = createStackNavigator();
 
+const customHeader = {
+  headerStyle: {
+    backgroundColor: "#8062DC",
+  },
+  headerTitleStyle: {
+    color: "white",
+  },
+  headerLeft: null,
+};
+
 export default class App extends React.Component {
   state = {
     isReady: false,
@@ -32,14 +42,17 @@ export default class App extends React.Component {
           <Stack.Screen
             name="intro"
             component={IntroScreen}
-            options={{ title: "Introduction" }}
+            options={{
+              title: "Introduction",
+              ...customHeader,
+            }}
           />
           <Stack.Screen
             name="quiz"
             component={QuizScreen}
             options={{
               title: "Quiz",
-              headerLeft: null,
+              ...customHeader,
             }}
           />
         </Stack.Navigator>
