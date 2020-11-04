@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ImageBackground } from "react-native";
 import { Card, CardItem, Text, Body, H2 } from "native-base";
 import OptionCard from "../Components/OptionCard";
+import BackgroundImage from "../assets/cover.jpeg";
+import { AntDesign as Icon } from "@expo/vector-icons";
+import LottieView from "lottie-react-native";
 
 export default class QuizScreen extends Component {
   state = {
@@ -13,7 +16,9 @@ export default class QuizScreen extends Component {
     ans: 0,
     options: [],
     status: "",
+    life: 3,
   };
+
   generateNewQuestion = () => {
     const numA = Math.floor(Math.random() * 100);
     const numB = Math.floor(Math.random() * 100);
@@ -37,14 +42,14 @@ export default class QuizScreen extends Component {
         status: "Correct",
       }));
     } else {
-      this.setState({ status: "Wrong" });
+      this.setState((state) => ({ status: "Wrong", life: state.life - 1 }));
+      if (this.state.life === 1) {
+        this.props.navigation.navigate("result", { coins: this.state.score });
+        return;
+      }
     }
     if (this.state.questionNum % 5 === 0) {
       // For terminating from game, Keep it less to check faster
-      if (this.state.level === 1) {
-        this.props.navigation.navigate("intro", { coins: this.state.score });
-        return;
-      }
       this.setState((state) => ({
         level: state.level + 1,
       }));
@@ -56,24 +61,18 @@ export default class QuizScreen extends Component {
   };
 
   render() {
-    const { numA, numB, ans, options, status } = this.state;
+    const { numA, numB, ans, options, status, life } = this.state;
     if (numA === 0 && numB === 0) {
       return <Text>Loading questions</Text>;
     }
     return (
-      <View style={styles.containerStyle}>
-        <View
-          style={{
-            alignSelf: "flex-start",
-            flexDirection: "row",
-            alignSelf: "stretch",
-            justifyContent: "space-evenly",
-          }}
-        >
-          <Text>Level: {this.state.level}</Text>
-          <Text>Question number: {this.state.questionNum}</Text>
-          <Text>Score: {this.state.score}</Text>
+      <ImageBackground style={styles.containerStyle} source={BackgroundImage}>
+        <View style={styles.scoreStyle}>
+          <Text style={styles.scoreStyle}>Level: {this.state.level}</Text>
+          <Text style={styles.scoreStyle}>{"❤️".repeat(life)}</Text>
+          <Text style={styles.scoreStyle}>Score: {this.state.score}</Text>
         </View>
+
         <View style={styles.bodyStyle}>
           <Card style={styles.questionStyle}>
             <CardItem header>
@@ -83,7 +82,6 @@ export default class QuizScreen extends Component {
             </CardItem>
           </Card>
           <View>
-            <Text>{status}</Text>
             {options.map((opt) => (
               <OptionCard
                 optionText={opt}
@@ -99,7 +97,7 @@ export default class QuizScreen extends Component {
             ))}
           </View>
         </View>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -116,16 +114,29 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
-    paddingVertical: 20,
+    paddingVertical: 50,
     alignItems: "center",
+    borderRadius: 10,
   },
   questionFontStyle: {
     fontFamily: "serif",
     fontWeight: "500",
   },
   bodyStyle: {
+    marginHorizontal: 10,
+    borderRadius: 40,
     display: "flex",
     justifyContent: "space-between",
     flex: 1,
+  },
+  scoreStyle: {
+    fontFamily: "Roboto",
+    fontWeight: "700",
+    color: "white",
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    alignSelf: "stretch",
+    justifyContent: "space-evenly",
+    paddingVertical: 5,
   },
 });

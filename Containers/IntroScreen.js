@@ -1,27 +1,28 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ImageBackground } from "react-native";
 import { Button, Text, H1, H3 } from "native-base";
+import { AntDesign as Icon } from "@expo/vector-icons";
 
 export default class IntroScreen extends Component {
   handleStartQuiz = () => {
     this.props.navigation.navigate("quiz");
   };
   render() {
-    const { params } = this.props.route;
-
     return (
       <View style={styles.introContainer}>
         <View>
-          <H1 style={styles.titleText}> Hello User </H1>
-          <H3 style={styles.descriptionText}>
-            {!!params
-              ? `You have earned ${params.coins} coins`
-              : "You are back"}
-          </H3>
+          <Text style={styles.titleText}> Hello User </Text>
+          <H3 style={styles.descriptionText}>It's time for Quiz</H3>
         </View>
         <View>
-          <Button onPress={this.handleStartQuiz}>
-            <Text>Start Quiz</Text>
+          <Button
+            onPress={this.handleStartQuiz}
+            style={styles.buttonStyle}
+            primary
+            large
+          >
+            <Icon name="caretright" color="white" size={26} />
+            <Text style={{ marginVertical: 10, fontSize: 18 }}>Start Quiz</Text>
           </Button>
         </View>
       </View>
@@ -39,8 +40,13 @@ const styles = StyleSheet.create({
   descriptionText: {
     color: "grey",
     margin: 7,
+    marginLeft: 15,
   },
   titleText: {
     fontWeight: "700",
+    alignItems: "center",
+    marginBottom: 20,
+    fontSize: 45,
   },
+  buttonStyle: { paddingHorizontal: 20, borderRadius: 10 },
 });

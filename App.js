@@ -8,12 +8,13 @@ import { AppLoading } from "expo";
 
 import IntroScreen from "./Containers/IntroScreen";
 import QuizScreen from "./Containers/QuizScreen";
+import ResultScreen from "./Containers/ResultScreen";
 
 const Stack = createStackNavigator();
 
 const customHeader = {
   headerStyle: {
-    backgroundColor: "#8062DC",
+    backgroundColor: "#8766ed",
   },
   headerTitleStyle: {
     color: "white",
@@ -52,6 +53,14 @@ export default class App extends React.Component {
             component={QuizScreen}
             options={{
               title: "Quiz",
+              ...customHeader,
+            }}
+          />
+          <Stack.Screen
+            name="result"
+            component={ResultScreen}
+            options={{
+              title: "Game Over",
               ...customHeader,
             }}
           />
