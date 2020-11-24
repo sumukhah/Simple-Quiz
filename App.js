@@ -1,4 +1,8 @@
-import { StatusBar } from "expo-status-bar";
+import {
+  StatusBar,
+  setStatusBarBackgroundColor,
+  setStatusBarStyle,
+} from "expo-status-bar";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -14,7 +18,7 @@ const Stack = createStackNavigator();
 
 const customHeader = {
   headerStyle: {
-    backgroundColor: "#8766ed",
+    backgroundColor: "#9777fc",
   },
   headerTitleStyle: {
     color: "white",
@@ -32,6 +36,9 @@ export default class App extends React.Component {
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
     });
     this.setState({ isReady: true });
+    // StatusBar.setSta
+    setStatusBarBackgroundColor("#8b66ff", true);
+    setStatusBarStyle("light");
   }
   render() {
     if (!this.state.isReady) {

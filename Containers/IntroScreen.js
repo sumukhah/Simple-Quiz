@@ -20,9 +20,9 @@ export default class IntroScreen extends Component {
             style={styles.buttonStyle}
             primary
             large
+            // rounded
           >
             <Icon name="caretright" color="white" size={26} />
-            <Text style={{ marginVertical: 10, fontSize: 18 }}>Start Quiz</Text>
           </Button>
         </View>
       </View>
@@ -48,5 +48,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 45,
   },
-  buttonStyle: { paddingHorizontal: 20, borderRadius: 10 },
+  buttonStyle: {
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    shadowColor: "#1111",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.36,
+    shadowRadius: 6.68,
+
+    elevation: 11,
+  },
 });
